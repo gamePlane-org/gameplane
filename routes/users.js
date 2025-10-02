@@ -5,9 +5,9 @@ const router = express.Router()
 
 // 1 frist endpoint: get all users
 
-router.get("/users", async (req, res) =>{
+router.get("/", async (req, res) =>{
     try {
-        const users = await getAllUsers(req.user)
+        const users = await getAllUsers()
 
         res.status(200).json({
             success: true,

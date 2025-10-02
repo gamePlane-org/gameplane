@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 
 // Import routes
 import userRoutes from "./routes/users.js";
+import auth from './routes/auth.js'
 
 
 // Initialize Express app
@@ -17,7 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Mount API routes
 
-app.use("/api", userRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", auth)
+
 
 // Protected route example
 
@@ -31,9 +34,6 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === "development" ? err.message : {},
   });
 });
-
-// 404 handler for undefined routes
-
 
 // Start server
 app.listen(PORT, () => {
