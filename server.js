@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Mount API routes
 
-app.use("/api/users", userRoutes);
+app.use("/api", userRoutes);
 app.use("/api/auth", auth)
 
 
