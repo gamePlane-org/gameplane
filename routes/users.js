@@ -10,7 +10,7 @@ import { authenticateToken, authorizeRole } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.use(authenticateToken);
+//  router.use(authenticateToken);
 
 // GET all users (Admin only)
 router.get("/users", authorizeRole("ADMIN"), async (req, res) => {
