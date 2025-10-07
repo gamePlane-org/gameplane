@@ -2,7 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma.js";
-// import { authenticateToken } from "../middleware/auth.js";
+import { authenticateToken, authorizeRole } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -49,9 +49,9 @@ router.post("/register", async (req, res) => {
     });
 
     const token = jwt.sign(
-      { userId: newUser.id },
+      { userId: newUser.id, role: newUser.role },
       process.env.JWT_SECRET || "mysecret",
-      { expiresIn: "24h" }
+      { expiresIn: "48h" }
     );
 
     res.status(201).json({
@@ -75,12 +75,12 @@ router.post("/register", async (req, res) => {
 //  LOGIN
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !role) {
       return res.status(400).json({
         success: false,
-        message: "Email and password are required",
+        message: "Email and password and role are required",
       });
     }
 
@@ -101,7 +101,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user.id },
+      { userId: user.id, role:user.role },
       process.env.JWT_SECRET || "mysecret",
       { expiresIn: "24h" }
     );
@@ -126,7 +126,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//  DELETE USER (self or admin)
+ //DELETE USER (self or admin)
+
 // router.delete("/delete/:id", authenticateToken, async (req, res) => {
 //   try {
 //     const { id } = req.params;
