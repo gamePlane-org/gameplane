@@ -6,6 +6,8 @@ import bodyParser from "body-parser";
 import userRoutes from "./routes/users.js";
 import auth from './routes/auth.js'
 import leagueRoutes from './routes/league.js'
+import fixtureRoutes from './routes/fixture.js'
+import resultRoutes from './routes/result.js'
 
 
 // Initialize Express app
@@ -22,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use("/api", userRoutes);
 app.use("/api/auth", auth)
 app.use("/api", leagueRoutes)
+app.use("/api", fixtureRoutes)
+app.use("/api", resultRoutes)
 
 
 // Protected route example
